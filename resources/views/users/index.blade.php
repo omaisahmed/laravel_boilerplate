@@ -1,44 +1,39 @@
 @extends('layouts.app')
 
 @section('css')
-  <!-- Page JS Plugins CSS -->
-  <link rel="stylesheet" href="{{ asset('js/plugins/datatables-bs5/css/dataTables.bootstrap5.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('js/plugins/datatables-buttons-bs5/css/buttons.bootstrap5.min.css') }}">
+    <!-- Page JS Plugins CSS -->
+    <link rel="stylesheet" href="{{ asset('js/plugins/datatables-bs5/css/dataTables.bootstrap5.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('js/plugins/datatables-buttons-bs5/css/buttons.bootstrap5.min.css') }}">
 @endsection
 
 @section('js')
-  <!-- jQuery (required for DataTables plugin) -->
-  <script src="{{ asset('js/lib/jquery.min.js') }}"></script>
-  <!-- Page JS Plugins -->
-  <script src="{{ asset('js/plugins/datatables/dataTables.min.js') }}"></script>
-  <script src="{{ asset('js/plugins/datatables-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
-  <script src="{{ asset('js/plugins/datatables-buttons/dataTables.buttons.min.js') }}"></script>
-  <script src="{{ asset('js/plugins/datatables-buttons-bs5/js/buttons.bootstrap5.min.js') }}"></script>
-  <script src="{{ asset('js/plugins/datatables-buttons-jszip/jszip.min.js') }}"></script>
-  <script src="{{ asset('js/plugins/datatables-buttons-pdfmake/pdfmake.min.js') }}"></script>
-  <script src="{{ asset('js/plugins/datatables-buttons-pdfmake/vfs_fonts.js') }}"></script>
-  <script src="{{ asset('js/plugins/datatables-buttons/buttons.print.min.js') }}"></script>
-  <script src="{{ asset('js/plugins/datatables-buttons/buttons.html5.min.js') }}"></script>
-  <!-- Page JS Code -->
-  @vite(['resources/assets/js/pages/datatables.js'])
+    <!-- jQuery (required for DataTables plugin) -->
+    <script src="{{ asset('js/lib/jquery.min.js') }}"></script>
+    <!-- Page JS Plugins -->
+    <script src="{{ asset('js/plugins/datatables/dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons-bs5/js/buttons.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons-jszip/jszip.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons-pdfmake/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons-pdfmake/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables-buttons/buttons.html5.min.js') }}"></script>
+    <!-- Page JS Code -->
+    @vite(['resources/assets/js/pages/datatables.js'])
 @endsection
 
 @section('content')
-    <!-- Hero -->
-    <div class="bg-body-light">
-        <div class="content content-full">
-            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-                <h1 class="flex-grow-1 fs-3 fw-semibold my-2 my-sm-3">Dashboard</h1>
-                <nav class="flex-shrink-0 my-2 my-sm-0 ms-sm-3" aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">Users</li>
-                        <li class="breadcrumb-item active" aria-current="page">Listing</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-    </div>
-    <!-- END Hero -->
+    <!-- Breadcrumb -->
+    @php
+    $breadcrumbs = [
+        ['name' => 'Users', 'url' => route('users.index')],
+        ['name' => 'Listings', 'url' => '#']
+    ];
+    $title = "Users";
+    @endphp
+    <x-breadcrumb :items="$breadcrumbs" :title="$title" />
+    <!-- END Breadcrumb -->
 
     <!-- Page Content -->
     <div class="content">
@@ -46,8 +41,11 @@
         <div class="block block-rounded">
             <div class="block-header block-header-default">
                 <h3 class="block-title">
-                    Users
+                    Users List
                 </h3>
+                <a href="{{ route('users.create') }}" class="btn btn-success me-1">
+                    <i class="fa fa-fw fa-plus me-1"></i> Add User
+                </a>
             </div>
             <div class="block-content block-content-full overflow-x-auto">
                 <!-- DataTables init on table by adding .js-dataTable-buttons class, functionality is initialized in js/pages/be_tables_datatables.min.js which was auto compiled from _js/pages/be_tables_datatables.js -->

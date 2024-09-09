@@ -59,17 +59,17 @@
                     </a>
                 </li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link" href="#">
+                    <a class="nav-main-link" href="{{ route('users.index') }}">
                         <i class="nav-main-link-icon fa fa-user-friends"></i>
                         <span class="nav-main-link-name">Users</span>
                     </a>
                 </li>
-                <li class="nav-main-item">
+                {{-- <li class="nav-main-item">
                     <a class="nav-main-link" href="#">
                         <i class="nav-main-link-icon fa fa-shopping-cart"></i>
                         <span class="nav-main-link-name">Orders</span>
                     </a>
-                </li>
+                </li> --}}
                 <li class="nav-main-item">
                     <a class="nav-main-link" href="{{ route('logout') }}"
                         onclick="event.preventDefault();
