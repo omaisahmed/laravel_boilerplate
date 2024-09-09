@@ -42,7 +42,7 @@
 
     <!-- Page Content -->
     <div class="content">
-        <!-- Dynamic Table with Export Buttons -->
+        <!-- Dynamic Table with Export Listings Buttons -->
         <div class="block block-rounded">
             <div class="block-header block-header-default">
                 <h3 class="block-title">
