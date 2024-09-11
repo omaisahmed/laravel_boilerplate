@@ -19,6 +19,56 @@
     <script src="{{ asset('js/plugins/datatables-buttons-pdfmake/vfs_fonts.js') }}"></script>
     <script src="{{ asset('js/plugins/datatables-buttons/buttons.print.min.js') }}"></script>
     <script src="{{ asset('js/plugins/datatables-buttons/buttons.html5.min.js') }}"></script>
+    <!-- Page JS Helpers (Table Tools helpers) -->
+    {{-- <script>Dashmix.helpersOnLoad(['dm-table-tools-checkable', 'dm-table-tools-sections']);</script> --}}
+    {{-- <script>
+        let tables = document.querySelectorAll('.js-table-checkable:not(.js-table-checkable-enabled)');
+        tables.forEach(table => {
+        // Add .js-table-checkable-enabled class to tag it as activated
+        table.classList.add('js-table-checkable-enabled');
+
+        // When a checkbox is clicked in thead
+        table.querySelector('thead input[type=checkbox]').addEventListener('click', e => {
+            // Check or uncheck all checkboxes in tbody
+            table.querySelectorAll('tbody input[type=checkbox]').forEach(checkbox => {
+            checkbox.checked = e.currentTarget.checked;
+
+            // Update Row classes
+            this.tableToolscheckRow(checkbox, e.currentTarget.checked);
+            });
+        });
+
+        // When a checkbox is clicked in tbody
+        table.querySelectorAll('tbody input[type=checkbox], tbody input + label').forEach(checkbox => {
+            checkbox.addEventListener('click', e => {
+            let checkboxHead = table.querySelector('thead input[type=checkbox]');
+
+            // Adjust checkbox in thead
+            if (!checkbox.checked) {
+                checkboxHead.checked = false
+            } else {
+                if (table.querySelectorAll('tbody input[type=checkbox]:checked').length === table.querySelectorAll('tbody input[type=checkbox]').length) {
+                checkboxHead.checked = true;
+                }
+            }
+
+            // Update Row classes
+            this.tableToolscheckRow(checkbox, checkbox.checked);
+            });
+        });
+    });
+
+     // Checkable table functionality helper - Checks or unchecks table row
+    function tableToolscheckRow(checkbox, checkedStatus) {
+        if (checkedStatus) {
+        checkbox.closest('tr').classList.add('table-active');
+        } else {
+        checkbox.closest('tr').classList.remove('table-active');
+        }
+    }
+
+    </script> --}}
+
     <!-- Page JS Code -->
     @vite(['resources/assets/js/pages/datatables.js'])
 @endsection
@@ -49,317 +99,49 @@
             </div>
             <div class="block-content block-content-full overflow-x-auto">
                 <!-- DataTables init on table by adding .js-dataTable-buttons class, functionality is initialized in js/pages/be_tables_datatables.min.js which was auto compiled from _js/pages/be_tables_datatables.js -->
-                <table class="table table-bordered table-striped table-vcenter js-dataTable-buttons">
+                <table class="table table-bordered table-striped table-vcenter js-dataTable-buttons js-table-checkable">
                     <thead>
                         <tr>
-                            <th class="text-center" style="width: 80px;">ID</th>
+                            {{-- <th class="text-center" style="width: 70px;">
+                                <div class="form-check d-inline-block">
+                                    <input class="form-check-input" type="checkbox" value="" id="check-all" name="check-all">
+                                    <label class="form-check-label" for="check-all"></label>
+                                </div>
+                            </th> --}}
+                            <th>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="example-checkbox-default2" name="example-checkbox-default2">
+                              </div>
+                            </th>
                             <th>Name</th>
                             <th class="d-none d-sm-table-cell" style="width: 30%;">Email</th>
-                            <th class="d-none d-sm-table-cell" style="width: 15%;">Access</th>
-                            <th class="d-none d-sm-table-cell" style="width: 15%;">Registered</th>
+                            <th class="d-none d-sm-table-cell" style="width: 15%;">Role</th>
+                            <th class="d-none d-sm-table-cell" style="width: 15%;">Created By</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="text-center">1</td>
+                        @foreach ($users as $key => $user)
+                        <tr class="">
+                            <td class="text-center">
+                                <div class="form-check d-inline-block">
+                                  <input class="form-check-input" type="checkbox" value="" id="row_1" name="row_1">
+                                  <label class="form-check-label" for="row_1"></label>
+                                </div>
+                              </td>
                             <td class="fw-semibold">
-                                <a href="be_pages_generic_blank.html">Ryan Flores</a>
+                                <a href="{{ route('users.edit', $user->id) }}">{{ $user->name }}</a>
                             </td>
                             <td class="d-none d-sm-table-cell">
-                                client1<span class="text-muted">@example.com</span>
+                                {{ $user->email }}
                             </td>
                             <td class="d-none d-sm-table-cell">
-                                <span class="badge bg-danger">Disabled</span>
+                                <span class="badge bg-primary">{{ $user->name }}</span>
                             </td>
                             <td class="d-none d-sm-table-cell">
-                                <span class="text-muted">6 days ago</span>
+                                <span class="text-muted">{{ auth()->user()->name }}</span>
                             </td>
                         </tr>
-                        <tr>
-                            <td class="text-center">2</td>
-                            <td class="fw-semibold">
-                                <a href="be_pages_generic_blank.html">Justin Hunt</a>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                client2<span class="text-muted">@example.com</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="badge bg-warning">Trial</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="text-muted">2 days ago</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">3</td>
-                            <td class="fw-semibold">
-                                <a href="be_pages_generic_blank.html">Adam McCoy</a>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                client3<span class="text-muted">@example.com</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="badge bg-success">VIP</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="text-muted">10 days ago</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">4</td>
-                            <td class="fw-semibold">
-                                <a href="be_pages_generic_blank.html">Carl Wells</a>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                client4<span class="text-muted">@example.com</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="badge bg-success">VIP</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="text-muted">2 days ago</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">5</td>
-                            <td class="fw-semibold">
-                                <a href="be_pages_generic_blank.html">Albert Ray</a>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                client5<span class="text-muted">@example.com</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="badge bg-danger">Disabled</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="text-muted">8 days ago</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">6</td>
-                            <td class="fw-semibold">
-                                <a href="be_pages_generic_blank.html">Wayne Garcia</a>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                client6<span class="text-muted">@example.com</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="badge bg-info">Business</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="text-muted">7 days ago</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">7</td>
-                            <td class="fw-semibold">
-                                <a href="be_pages_generic_blank.html">Thomas Riley</a>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                client7<span class="text-muted">@example.com</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="badge bg-info">Business</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="text-muted">5 days ago</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">8</td>
-                            <td class="fw-semibold">
-                                <a href="be_pages_generic_blank.html">Carol Ray</a>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                client8<span class="text-muted">@example.com</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="badge bg-primary">Personal</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="text-muted">9 days ago</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">9</td>
-                            <td class="fw-semibold">
-                                <a href="be_pages_generic_blank.html">Adam McCoy</a>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                client9<span class="text-muted">@example.com</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="badge bg-danger">Disabled</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="text-muted">7 days ago</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">10</td>
-                            <td class="fw-semibold">
-                                <a href="be_pages_generic_blank.html">Ralph Murray</a>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                client10<span class="text-muted">@example.com</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="badge bg-info">Business</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="text-muted">6 days ago</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">11</td>
-                            <td class="fw-semibold">
-                                <a href="be_pages_generic_blank.html">Betty Kelley</a>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                client11<span class="text-muted">@example.com</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="badge bg-info">Business</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="text-muted">3 days ago</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">12</td>
-                            <td class="fw-semibold">
-                                <a href="be_pages_generic_blank.html">Wayne Garcia</a>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                client12<span class="text-muted">@example.com</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="badge bg-success">VIP</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="text-muted">7 days ago</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">13</td>
-                            <td class="fw-semibold">
-                                <a href="be_pages_generic_blank.html">Megan Fuller</a>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                client13<span class="text-muted">@example.com</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="badge bg-success">VIP</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="text-muted">4 days ago</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">14</td>
-                            <td class="fw-semibold">
-                                <a href="be_pages_generic_blank.html">Megan Fuller</a>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                client14<span class="text-muted">@example.com</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="badge bg-info">Business</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="text-muted">5 days ago</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">15</td>
-                            <td class="fw-semibold">
-                                <a href="be_pages_generic_blank.html">Sara Fields</a>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                client15<span class="text-muted">@example.com</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="badge bg-success">VIP</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="text-muted">8 days ago</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">16</td>
-                            <td class="fw-semibold">
-                                <a href="be_pages_generic_blank.html">Lisa Jenkins</a>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                client16<span class="text-muted">@example.com</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="badge bg-danger">Disabled</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="text-muted">6 days ago</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">17</td>
-                            <td class="fw-semibold">
-                                <a href="be_pages_generic_blank.html">Jack Greene</a>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                client17<span class="text-muted">@example.com</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="badge bg-primary">Personal</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="text-muted">3 days ago</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">18</td>
-                            <td class="fw-semibold">
-                                <a href="be_pages_generic_blank.html">Ryan Flores</a>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                client18<span class="text-muted">@example.com</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="badge bg-info">Business</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="text-muted">6 days ago</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">19</td>
-                            <td class="fw-semibold">
-                                <a href="be_pages_generic_blank.html">Andrea Gardner</a>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                client19<span class="text-muted">@example.com</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="badge bg-primary">Personal</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="text-muted">10 days ago</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">20</td>
-                            <td class="fw-semibold">
-                                <a href="be_pages_generic_blank.html">Danielle Jones</a>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                client20<span class="text-muted">@example.com</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="badge bg-info">Business</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="text-muted">6 days ago</span>
-                            </td>
-                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
