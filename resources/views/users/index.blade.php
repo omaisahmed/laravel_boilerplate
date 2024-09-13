@@ -4,6 +4,7 @@
     <!-- Page JS Plugins CSS -->
     <link rel="stylesheet" href="{{ asset('js/plugins/datatables-bs5/css/dataTables.bootstrap5.min.css') }}">
     <link rel="stylesheet" href="{{ asset('js/plugins/datatables-buttons-bs5/css/buttons.bootstrap5.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('js/plugins/sweetalert2/sweetalert2.min.css') }}">
 @endsection
 
 @section('js')
@@ -19,58 +20,10 @@
     <script src="{{ asset('js/plugins/datatables-buttons-pdfmake/vfs_fonts.js') }}"></script>
     <script src="{{ asset('js/plugins/datatables-buttons/buttons.print.min.js') }}"></script>
     <script src="{{ asset('js/plugins/datatables-buttons/buttons.html5.min.js') }}"></script>
-    <!-- Page JS Helpers (Table Tools helpers) -->
-    {{-- <script>Dashmix.helpersOnLoad(['dm-table-tools-checkable', 'dm-table-tools-sections']);</script> --}}
-    {{-- <script>
-        let tables = document.querySelectorAll('.js-table-checkable:not(.js-table-checkable-enabled)');
-        tables.forEach(table => {
-        // Add .js-table-checkable-enabled class to tag it as activated
-        table.classList.add('js-table-checkable-enabled');
-
-        // When a checkbox is clicked in thead
-        table.querySelector('thead input[type=checkbox]').addEventListener('click', e => {
-            // Check or uncheck all checkboxes in tbody
-            table.querySelectorAll('tbody input[type=checkbox]').forEach(checkbox => {
-            checkbox.checked = e.currentTarget.checked;
-
-            // Update Row classes
-            this.tableToolscheckRow(checkbox, e.currentTarget.checked);
-            });
-        });
-
-        // When a checkbox is clicked in tbody
-        table.querySelectorAll('tbody input[type=checkbox], tbody input + label').forEach(checkbox => {
-            checkbox.addEventListener('click', e => {
-            let checkboxHead = table.querySelector('thead input[type=checkbox]');
-
-            // Adjust checkbox in thead
-            if (!checkbox.checked) {
-                checkboxHead.checked = false
-            } else {
-                if (table.querySelectorAll('tbody input[type=checkbox]:checked').length === table.querySelectorAll('tbody input[type=checkbox]').length) {
-                checkboxHead.checked = true;
-                }
-            }
-
-            // Update Row classes
-            this.tableToolscheckRow(checkbox, checkbox.checked);
-            });
-        });
-    });
-
-     // Checkable table functionality helper - Checks or unchecks table row
-    function tableToolscheckRow(checkbox, checkedStatus) {
-        if (checkedStatus) {
-        checkbox.closest('tr').classList.add('table-active');
-        } else {
-        checkbox.closest('tr').classList.remove('table-active');
-        }
-    }
-
-    </script> --}}
-
+    <script src="{{ asset('js/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
     <!-- Page JS Code -->
     @vite(['resources/assets/js/pages/datatables.js'])
+    <script src="{{ asset('resources/assets/js/pages/be_comp_dialogs.min.js') }}"></script>
 @endsection
 
 @section('content')
@@ -99,34 +52,22 @@
             </div>
             <div class="block-content block-content-full overflow-x-auto">
                 <!-- DataTables init on table by adding .js-dataTable-buttons class, functionality is initialized in js/pages/be_tables_datatables.min.js which was auto compiled from _js/pages/be_tables_datatables.js -->
-                <table class="table table-bordered table-striped table-vcenter js-dataTable-buttons js-table-checkable">
+                <table class="table  table-hover table-vcenter js-dataTable-buttons">
                     <thead>
-                        <tr>
-                            {{-- <th class="text-center" style="width: 70px;">
-                                <div class="form-check d-inline-block">
-                                    <input class="form-check-input" type="checkbox" value="" id="check-all" name="check-all">
-                                    <label class="form-check-label" for="check-all"></label>
-                                </div>
-                            </th> --}}
-                            <th>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="example-checkbox-default2" name="example-checkbox-default2">
-                              </div>
-                            </th>
-                            <th>Name</th>
-                            <th class="d-none d-sm-table-cell" style="width: 30%;">Email</th>
-                            <th class="d-none d-sm-table-cell" style="width: 15%;">Role</th>
-                            <th class="d-none d-sm-table-cell" style="width: 15%;">Created By</th>
+                        <tr class="bg-dark">
+                            <th class="text-white">ID</th>
+                            <th class="text-white">Name</th>
+                            <th class="d-none d-sm-table-cell text-white" style="width: 30%;">Email</th>
+                            <th class="d-none d-sm-table-cell text-white" style="width: 15%;">Role</th>
+                            <th class="d-none d-sm-table-cell text-white" style="width: 15%;">Created By</th>
+                            <th class="text-center text-white" style="width: 100px;">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($users as $key => $user)
                         <tr class="">
                             <td class="text-center">
-                                <div class="form-check d-inline-block">
-                                  <input class="form-check-input" type="checkbox" value="" id="row_1" name="row_1">
-                                  <label class="form-check-label" for="row_1"></label>
-                                </div>
+                                {{ $key + 1 }}
                               </td>
                             <td class="fw-semibold">
                                 <a href="{{ route('users.edit', $user->id) }}">{{ $user->name }}</a>
@@ -140,6 +81,16 @@
                             <td class="d-none d-sm-table-cell">
                                 <span class="text-muted">{{ auth()->user()->name }}</span>
                             </td>
+                            <td class="text-center">
+                                <div class="btn-group">
+                                  <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-alt-secondary js-bs-tooltip-enabled" data-bs-toggle="tooltip" aria-label="Edit" data-bs-original-title="Edit">
+                                    <i class="fa fa-pencil-alt"></i>
+                                  </a>
+                                  <button type="button" class="btn btn-sm btn-alt-secondary js-bs-tooltip-enabled js-swal-confirm" data-bs-toggle="tooltip" aria-label="Delete" data-bs-original-title="Delete">
+                                    <i class="fa fa-times"></i>
+                                  </button>
+                                </div>
+                              </td>
                         </tr>
                         @endforeach
                     </tbody>
