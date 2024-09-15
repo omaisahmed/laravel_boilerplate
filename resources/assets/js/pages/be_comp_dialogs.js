@@ -140,8 +140,8 @@
 class PageDialogs {
     /*
      * Delete Functionality
-     */
-    static initSweetAlertDelete() {
+    */
+    static Delete() {
         $(document).on('click', '.js-swal-delete', function (event) {
             let url = $(this).data('action');
             let model = $(this).data('model');
@@ -197,10 +197,56 @@ class PageDialogs {
     }
 
     /*
+     * Store Functionality
+    */
+    static Store() {
+        $(document).on('click', '.js-swal-store', function (event) {
+            let url = $(this).data('action');
+            formData = new FormData(this);
+
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: formData,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    'Content-Type': 'application/json',
+                },
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Saved!',
+                            text: response.message,
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
+                        setTimeout(function(){
+                            window.location = response.redirect_url
+                        }, 1000);
+                    }
+                },
+                error: function (response) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                    });
+                }
+            });
+
+        });
+    }
+
+    /*
      * Init functionality for confirmation dialogs
      */
     static init() {
-        this.initSweetAlertDelete();
+        this.Delete();
+        this.Store();
     }
 }
 

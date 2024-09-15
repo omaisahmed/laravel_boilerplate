@@ -22,17 +22,14 @@
     <script src="{{ asset('js/plugins/datatables-buttons/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('js/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
     <!-- Page JS Code -->
-    @vite(['resources/assets/js/pages/datatables.js','resources/assets/js/pages/be_comp_dialogs.js'])
+    @vite(['resources/assets/js/pages/datatables.js', 'resources/assets/js/pages/be_comp_dialogs.js'])
 @endsection
 
 @section('content')
     <!-- Breadcrumb -->
     @php
-    $breadcrumbs = [
-        ['name' => 'Users', 'url' => route('users.index')],
-        ['name' => 'Listings', 'url' => '#']
-    ];
-    $title = "Users";
+        $breadcrumbs = [['name' => 'Users', 'url' => route('users.index')], ['name' => 'Listings', 'url' => '#']];
+        $title = 'Users';
     @endphp
     <x-breadcrumb :items="$breadcrumbs" :title="$title" />
     <!-- END Breadcrumb -->
@@ -50,8 +47,7 @@
                 </a>
             </div>
             <div class="block-content block-content-full overflow-x-auto">
-                <!-- DataTables init on table by adding .js-dataTable-buttons class, functionality is initialized in js/pages/be_tables_datatables.min.js which was auto compiled from _js/pages/be_tables_datatables.js -->
-                <table class="table  table-hover table-vcenter js-dataTable-buttons">
+                <table class="table table-hover table-vcenter js-dataTable-buttons">
                     <thead>
                         <tr class="bg-dark">
                             <th class="text-white">ID</th>
@@ -64,36 +60,37 @@
                     </thead>
                     <tbody>
                         @foreach ($users as $key => $user)
-                        <tr class="">
-                            <td class="text-center">
-                                {{ $key + 1 }}
-                              </td>
-                            <td class="fw-semibold">
-                                <a href="{{ route('users.edit', $user->id) }}">{{ $user->name }}</a>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                {{ $user->email }}
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="badge bg-primary">{{ $user->name }}</span>
-                            </td>
-                            <td class="d-none d-sm-table-cell">
-                                <span class="text-muted">{{ auth()->user()->name }}</span>
-                            </td>
-                            <td class="text-center">
-                                <div class="btn-group">
-                                  <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-alt-secondary js-bs-tooltip-enabled" data-bs-toggle="tooltip" aria-label="Edit" data-bs-original-title="Edit">
-                                    <i class="fa fa-pencil-alt"></i>
-                                  </a>
-                                <button type="button" class="btn btn-sm btn-alt-secondary js-swal-delete"
-                                    data-model="User"
-                                    data-action="{{ route('users.delete', $user->id) }}"
-                                    data-name="{{ $user->name }}">
-                                    <i class="fa fa-times"></i>
-                                </button>
-                                </div>
-                              </td>
-                        </tr>
+                            <tr class="">
+                                <td class="text-center">
+                                    {{ $key + 1 }}
+                                </td>
+                                <td class="fw-semibold">
+                                    <a href="{{ route('users.edit', $user->id) }}">{{ $user->name }}</a>
+                                </td>
+                                <td class="d-none d-sm-table-cell">
+                                    {{ $user->email }}
+                                </td>
+                                <td class="d-none d-sm-table-cell">
+                                    <span class="badge bg-primary">{{ $user->name }}</span>
+                                </td>
+                                <td class="d-none d-sm-table-cell">
+                                    <span class="text-muted">{{ auth()->user()->name }}</span>
+                                </td>
+                                <td class="text-center">
+                                    <div class="btn-group">
+                                        <a href="{{ route('users.edit', $user->id) }}"
+                                            class="btn btn-sm btn-alt-secondary js-bs-tooltip-enabled"
+                                            data-bs-toggle="tooltip" aria-label="Edit" data-bs-original-title="Edit">
+                                            <i class="fa fa-pencil-alt"></i>
+                                        </a>
+                                        <button type="button" class="btn btn-sm btn-alt-secondary js-swal-delete"
+                                            data-model="User" data-action="{{ route('users.delete', $user->id) }}"
+                                            data-name="{{ $user->name }}">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>

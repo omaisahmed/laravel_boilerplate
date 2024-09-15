@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Hash;
@@ -18,19 +19,29 @@ class UserController extends Controller
     // Show the form for creating a new user
     public function create()
     {
-        return view('users.create');
+        $data['roles'] = Role::all();
+        return view('users.create', $data);
     }
 
     // Store a newly created user in storage
     public function store(UserRequest $request)
     {
+        dd('test');
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
+        $user->role_id = $request->role_id;
         $user->save();
+        dd($user);
 
-        return redirect()->route('users.index')->with('success', 'User created successfully.');
+        return response()->json([
+            'success' => true,
+            'message' => 'User created successfully.',
+            'redirect_url' => route('users.index')
+        ]);
+
+        // return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
 
     // Show the form for editing the specified user

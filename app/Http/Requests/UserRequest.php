@@ -21,6 +21,7 @@ class UserRequest extends FormRequest
                     'name' => ['required', 'string', 'max:255'],
                     'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                     'password' => ['required', 'string', 'min:8', 'confirmed'],
+                    'role' => 'required',
                 ];
 
             case 'users.update':
@@ -28,6 +29,7 @@ class UserRequest extends FormRequest
                     'name' => ['required', 'string', 'max:255'],
                     'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $this->route('id')],
                     'password' => ['nullable', 'string', 'min:8', 'confirmed'],
+                    'role' => 'required',
                 ];
 
             default:

@@ -55,7 +55,7 @@
                         </div> --}}
                     </div>
                     <div class="block-content block-content-full block-content-sm bg-body-light fs-sm">
-                        <a class="fw-medium" href="javascript:void(0)">
+                        <a class="fw-medium" href="{{ route('users.index') }}">
                             View all users
                             <i class="fa fa-arrow-right ms-1 opacity-25"></i>
                         </a>
