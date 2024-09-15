@@ -18,6 +18,6 @@ Route::middleware(['auth'])->group(function () {
         Route::post('store', [UserController::class, 'store'])->name('store');
         Route::get('edit/{id}', [UserController::class, 'edit'])->name('edit');
         Route::put('update/{id}', [UserController::class, 'update'])->name('update');
-        Route::delete('delete/{id}', [UserController::class, 'destroy'])->name('destroy');
+        Route::delete('delete/{id}', [UserController::class, 'delete'])->name('delete');
     });
 });

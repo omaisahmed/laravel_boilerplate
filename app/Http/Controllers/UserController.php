@@ -55,11 +55,15 @@ class UserController extends Controller
     }
 
     // Remove the specified user from storage
-    public function destroy($id)
+    public function delete($id)
     {
         $user = User::findOrFail($id);
         $user->delete();
 
-        return redirect()->route('users.index')->with('success', 'User deleted successfully.');
+        return response()->json([
+            'success' => true,
+            'message' => 'User deleted successfully.'
+        ]);
     }
+
 }

@@ -22,8 +22,7 @@
     <script src="{{ asset('js/plugins/datatables-buttons/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('js/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
     <!-- Page JS Code -->
-    @vite(['resources/assets/js/pages/datatables.js'])
-    <script src="{{ asset('resources/assets/js/pages/be_comp_dialogs.min.js') }}"></script>
+    @vite(['resources/assets/js/pages/datatables.js','resources/assets/js/pages/be_comp_dialogs.js'])
 @endsection
 
 @section('content')
@@ -86,9 +85,12 @@
                                   <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-alt-secondary js-bs-tooltip-enabled" data-bs-toggle="tooltip" aria-label="Edit" data-bs-original-title="Edit">
                                     <i class="fa fa-pencil-alt"></i>
                                   </a>
-                                  <button type="button" class="btn btn-sm btn-alt-secondary js-bs-tooltip-enabled js-swal-confirm" data-bs-toggle="tooltip" aria-label="Delete" data-bs-original-title="Delete">
+                                <button type="button" class="btn btn-sm btn-alt-secondary js-swal-delete"
+                                    data-model="User"
+                                    data-action="{{ route('users.delete', $user->id) }}"
+                                    data-name="{{ $user->name }}">
                                     <i class="fa fa-times"></i>
-                                  </button>
+                                </button>
                                 </div>
                               </td>
                         </tr>

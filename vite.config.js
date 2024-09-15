@@ -8,6 +8,7 @@ export default defineConfig({
                 'resources/assets/css/dashmix.min.css',
                 'resources/assets/js/dashmix.app.min.js',
                 'resources/assets/js/pages/datatables.js',
+                'resources/assets/js/pages/be_comp_dialogs.js',
             ],
             refresh: true,
         }),
