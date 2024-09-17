@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->foreignId('role_id')->nullable()->constrained()->on('roles')->name('users_role');
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
 

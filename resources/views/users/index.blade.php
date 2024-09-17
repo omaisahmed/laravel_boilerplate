@@ -25,6 +25,8 @@
     @vite(['resources/assets/js/pages/datatables.js', 'resources/assets/js/pages/be_comp_dialogs.js'])
 @endsection
 
+@section('title', 'View Users')
+
 @section('content')
     <!-- Breadcrumb -->
     @php
@@ -71,7 +73,7 @@
                                     {{ $user->email }}
                                 </td>
                                 <td class="d-none d-sm-table-cell">
-                                    <span class="badge bg-primary">{{ $user->name }}</span>
+                                    <span class="badge bg-primary">{{ $user->role->name ?? 'Admin' }}</span>
                                 </td>
                                 <td class="d-none d-sm-table-cell">
                                     <span class="text-muted">{{ auth()->user()->name }}</span>
@@ -83,11 +85,13 @@
                                             data-bs-toggle="tooltip" aria-label="Edit" data-bs-original-title="Edit">
                                             <i class="fa fa-pencil-alt"></i>
                                         </a>
-                                        <button type="button" class="btn btn-sm btn-alt-secondary js-swal-delete"
+                                        @if(!$user->isAdmin())
+                                        <button type="button" class="btn btn-sm btn-alt-secondary delete-record"
                                             data-model="User" data-action="{{ route('users.delete', $user->id) }}"
                                             data-name="{{ $user->name }}">
                                             <i class="fa fa-times"></i>
                                         </button>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>

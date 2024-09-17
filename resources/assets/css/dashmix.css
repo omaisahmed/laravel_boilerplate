@@ -35336,3 +35336,16 @@ table.table.dataTable thead > tr > th.dt-ordering-desc span.dt-column-order:afte
 .dark-mode table.table.dataTable.table-striped > tbody > tr:nth-of-type(2n+1) > * {
   box-shadow: inset 0 0 0 9999px #1c2029;
 }
+
+/* Remove the background color and border from the dismiss button of toaster */
+.alert .close {
+    background-color: transparent;
+    border: none;
+    color: inherit;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+#search-results{
+    top: 77%;
+}

@@ -142,7 +142,8 @@ class PageDialogs {
      * Delete Functionality
     */
     static Delete() {
-        $(document).on('click', '.js-swal-delete', function (event) {
+        $(document).on('click', '.delete-record', function (event) {
+            event.preventDefault();
             let url = $(this).data('action');
             let model = $(this).data('model');
             let name = $(this).data('name');
@@ -200,46 +201,65 @@ class PageDialogs {
      * Store Functionality
     */
     static Store() {
-        $(document).on('click', '.js-swal-store', function (event) {
-            let url = $(this).data('action');
-            formData = new FormData(this);
+        $(document).on('submit', '.form-store', function (event) {
+            event.preventDefault();
+            let url = $(this).attr('action');
+            let formData = new FormData(this);
+            $('.is-invalid').removeClass('is-invalid');
+            $('.invalid-feedback').text('').hide();
 
             $.ajax({
                 type: 'POST',
                 url: url,
                 data: formData,
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                    'Content-Type': 'application/json',
-                },
                 contentType: false,
                 cache: false,
                 processData: false,
                 success: function (response) {
                     if (response.success) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Saved!',
-                            text: response.message,
-                            timer: 1500,
-                            showConfirmButton: false
+                        $.notify({
+                            message: response.message
+                        }, {
+                            type: 'success',
+                            delay: 0,
+                            allow_dismiss: true,
+                            // offset: { y: 50, x: 20 },
+                            placement: {
+                                from: "top",
+                                align: "right"
+                            }
                         });
+
                         setTimeout(function(){
-                            window.location = response.redirect_url
+                            window.location = response.redirect_url;
                         }, 1000);
                     }
                 },
                 error: function (response) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Something went wrong!',
-                    });
+                    if (response.status === 422) {
+                        let errors = response.responseJSON.errors;
+                        $.each(errors, function (field, messages) {
+                            $('[name="' + field + '"]').addClass('is-invalid');
+                            $('[name="' + field + '"]').next('.invalid-feedback').text(messages[0]).show();
+                        });
+                    } else {
+                        $.notify({
+                            message: 'Something went wrong!'
+                        }, {
+                            type: 'danger',
+                            delay: 0,
+                            allow_dismiss: true,
+                            placement: {
+                                from: "top",
+                                align: "right"
+                            }
+                        });
+                    }
                 }
             });
-
         });
     }
+
 
     /*
      * Init functionality for confirmation dialogs

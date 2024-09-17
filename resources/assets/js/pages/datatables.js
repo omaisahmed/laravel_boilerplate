@@ -52,11 +52,11 @@ class pageTablesDatatables {
       layout: {
         topStart: {
           pageLength: {
-            menu: [5, 10, 15, 20]
+            menu: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
           },
         },
       },
-      pageLength: 5,
+      pageLength: 10,
       autoWidth: false,
     });
 
@@ -68,7 +68,7 @@ class pageTablesDatatables {
           buttons: ['copy', 'excel', 'csv', 'pdf', 'print']
         },
       },
-      pageLength: 5,
+      pageLength: 10,
       autoWidth: false,
     });
 	}

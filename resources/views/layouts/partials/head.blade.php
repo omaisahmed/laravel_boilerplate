@@ -2,7 +2,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Dashboard</title>
+    <title>@yield('title', 'Dashboard')</title>
     <meta name="description" content="Dashboard">
     <meta name="author" content="pixelcave">
     <meta name="robots" content="index, follow">
@@ -33,7 +33,7 @@
     {{-- <link rel="stylesheet" id="css-theme" href="{{ asset('assets/css/themes/xwork.min.css') }}"> --}}
     <!-- END Stylesheets -->
     @yield('css')
-    @vite(['resources/assets/css/dashmix.min.css', 'resources/assets/js/dashmix.app.min.js'])
+    @vite(['resources/assets/css/dashmix.css', 'resources/assets/js/dashmix.app.min.js', 'resources/assets/js/dashmix.js'])
     {{-- @vite(['resources/sass/main.scss', 'resources/js/dashmix/app.js']) --}}
     @yield('js')
 </head>
