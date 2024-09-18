@@ -8,8 +8,6 @@
 @endsection
 
 @section('js')
-    <!-- jQuery (required for DataTables plugin) -->
-    <script src="{{ asset('js/lib/jquery.min.js') }}"></script>
     <!-- Page JS Plugins -->
     <script src="{{ asset('js/plugins/datatables/dataTables.min.js') }}"></script>
     <script src="{{ asset('js/plugins/datatables-bs5/js/dataTables.bootstrap5.min.js') }}"></script>

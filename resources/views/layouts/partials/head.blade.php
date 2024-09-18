@@ -25,6 +25,9 @@
         href="{{ asset('assets/media/favicons/apple-touch-icon-180x180.png') }}">
     <!-- END Icons -->
 
+    <!-- jQuery -->
+    <script src="{{ asset('js/lib/jquery.min.js') }}"></script>
+
     <!-- Stylesheets -->
     <!-- Dashmix framework -->
     {{-- <link rel="stylesheet" id="css-main" href="{{ asset('assets/css/dashmix.min.css') }}"> --}}

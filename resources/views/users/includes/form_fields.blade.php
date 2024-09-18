@@ -44,4 +44,9 @@
     <!-- Submit Button -->
     <x-submit-button :cancelRoute="route('users.index')" />
     <!-- Submit Button -->
+    <div id="loader" style="display: none; margin-top: 15px;">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
 </div>

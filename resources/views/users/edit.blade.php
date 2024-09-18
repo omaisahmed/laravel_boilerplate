@@ -6,8 +6,6 @@
 @endsection
 
 @section('js')
-    <!-- jQuery -->
-    <script src="{{ asset('js/lib/jquery.min.js') }}"></script>
     <!-- Page JS Plugins -->
     <script src="{{ asset('js/plugins/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
     <script src="{{ asset('js/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
